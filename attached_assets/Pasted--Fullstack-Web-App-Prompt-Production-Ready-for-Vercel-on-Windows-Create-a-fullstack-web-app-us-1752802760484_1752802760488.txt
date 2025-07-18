@@ -1,0 +1,108 @@
+# Fullstack Web App Prompt (Production-Ready for Vercel on Windows)
+
+Create a fullstack web app using:
+
+Frontend:
+- React (with Vite or CRA)
+- Tailwind CSS
+- Flipbook viewer (react-pdf, react-pageflip, or flip-book-react)
+- Paystack inline payment (frontend-only; just add keys to .env)
+
+Backend:
+- Node.js + Express
+- MongoDB (MongoDB Atlas)
+- Multer for PDF uploads
+- JWT-based auth
+
+Features:
+
+📚 Book Library:
+- Display all books (Title, Author, Cover Image, Description, PDF file)
+- Preview feature:
+  - Flipbook-style preview of PDF
+  - Only first 3 pages viewable
+  - Attempt to view 4th page triggers Paystack modal
+- After successful payment:
+  - Allow full PDF download
+  - Store purchase info (email, book, transaction ref, date)
+- Add to Cart (using localStorage)
+
+🎥 Video Library:
+- Display videos (Title, Thumbnail, Description, Platform, Video Link)
+- Open video links externally
+- Admin can add/edit/delete videos via dashboard
+
+🧑‍💼 About Author Section:
+- Frontend section describing the author
+- Include links to:
+  - Facebook
+  - Instagram
+  - TikTok
+  - LinkedIn
+  - X (formerly Twitter)
+
+🔐 Admin Panel:
+- JWT login
+- Upload books + PDF
+- Upload videos
+- Edit/delete existing content
+- Add/edit homepage sections (e.g., welcome text, featured block)
+
+💳 Payment Gateway:
+- Paystack integration (frontend only — just add public key)
+- Uses inline modal
+- Store purchase record on backend
+- Download route protected (only paid users)
+
+📁 Folder Structure:
+
+/ (root)
+│
+├── package.json
+├── vercel.json
+│
+├── /client
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── BookCard.jsx
+│   │   │   ├── VideoCard.jsx
+│   │   │   ├── FlipBookViewer.jsx
+│   │   │   ├── Cart.jsx
+│   │   │   └── AuthorSection.jsx
+│   │   ├── pages/
+│   │   │   ├── BookPage.jsx
+│   │   │   ├── VideoPage.jsx
+│   │   │   └── AdminDashboard.jsx
+│   │   └── App.jsx
+│
+├── /server
+│   ├── index.js
+│   ├── routes/
+│   │   ├── books.js
+│   │   ├── videos.js
+│   │   ├── auth.js
+│   │   └── payments.js
+│   ├── controllers/
+│   ├── models/
+│   │   ├── Book.js
+│   │   ├── Video.js
+│   │   └── Purchase.js
+│   └── storage/
+
+⚙️ Deployment (Windows + Vercel):
+
+- Frontend builds to: client/dist
+- Backend builds to: dist/index.js
+- vercel.json:
+  {
+    "rewrites": [
+      { "source": "/api/(.*)", "destination": "/api/index.js" }
+    ]
+  }
+
+Notes:
+- No Linux/Mac setup — only Windows.
+- Frontend handles Paystack and Flipbook functionality.
+- Just upload books/videos and everything else works automatically.
+- No public speaking or blog — just Books, Videos, and Author Info.
