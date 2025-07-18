@@ -38,13 +38,16 @@ export default function HomePage() {
       
       <Hero />
       
+      {/* Author Section - immediately after hero */}
+      <AuthorSection />
+      
       {/* Books Section */}
       <section id="books" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Digital Book Library</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Featured Books</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Explore our collection of premium digital books. Preview the first 3 pages for free, then purchase for full access.
+              Discover our handpicked selection of premium digital books. Preview the first 3 pages for free, then purchase for full access.
             </p>
           </div>
           
@@ -63,7 +66,7 @@ export default function HomePage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {books.map((book) => (
+              {books.filter(book => book.featured).map((book) => (
                 <BookCard 
                   key={book.id} 
                   book={book} 
@@ -80,9 +83,9 @@ export default function HomePage() {
       <section id="videos" className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Video Library</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Featured Videos</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Watch educational videos and tutorials. All videos open in external platforms for the best viewing experience.
+              Watch our curated selection of educational videos and tutorials. All videos open in external platforms for the best viewing experience.
             </p>
           </div>
           
@@ -100,7 +103,7 @@ export default function HomePage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {videos.map((video) => (
+              {videos.filter(video => video.featured).map((video) => (
                 <VideoCard key={video.id} video={video} />
               ))}
             </div>
@@ -108,7 +111,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <AuthorSection />
       <Footer />
 
       {/* Modals */}

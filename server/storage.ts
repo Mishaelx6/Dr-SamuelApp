@@ -22,6 +22,7 @@ export interface IStorage {
   
   // Purchase operations
   createPurchase(purchase: InsertPurchase): Promise<Purchase>;
+  getAllPurchases(): Promise<Purchase[]>;
   getPurchasesByEmail(email: string): Promise<Purchase[]>;
   hasPurchased(email: string, bookId: number): Promise<boolean>;
 }
@@ -56,7 +57,8 @@ export class MemStorage implements IStorage {
       description: "Comprehensive guide to modern digital marketing strategies, including social media, SEO, and conversion optimization techniques.",
       price: "29.99",
       coverImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=500",
-      pdfFile: null
+      pdfFile: null,
+      featured: true
     });
     
     this.createBook({
@@ -65,7 +67,8 @@ export class MemStorage implements IStorage {
       description: "Complete guide to modern web development using React, Node.js, and MongoDB. Build production-ready applications from scratch.",
       price: "39.99",
       coverImage: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=500",
-      pdfFile: null
+      pdfFile: null,
+      featured: false
     });
     
     this.createBook({
@@ -74,7 +77,8 @@ export class MemStorage implements IStorage {
       description: "Master the fundamentals of user experience design. Learn research methods, prototyping, and testing strategies for digital products.",
       price: "34.99",
       coverImage: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=500",
-      pdfFile: null
+      pdfFile: null,
+      featured: true
     });
     
     // Add sample videos
@@ -84,7 +88,8 @@ export class MemStorage implements IStorage {
       thumbnail: "https://images.unsplash.com/photo-1556761175-4b46a572b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=300",
       platform: "YouTube",
       videoUrl: "https://youtube.com/watch?v=example",
-      duration: "45 min"
+      duration: "45 min",
+      featured: true
     });
     
     this.createVideo({
@@ -93,7 +98,8 @@ export class MemStorage implements IStorage {
       thumbnail: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=300",
       platform: "YouTube",
       videoUrl: "https://youtube.com/watch?v=example",
-      duration: "2h 15min"
+      duration: "2h 15min",
+      featured: false
     });
     
     this.createVideo({
@@ -102,7 +108,23 @@ export class MemStorage implements IStorage {
       thumbnail: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=300",
       platform: "Vimeo",
       videoUrl: "https://vimeo.com/example",
-      duration: "1h 30min"
+      duration: "1h 30min",
+      featured: true
+    });
+
+    // Add sample purchases for demo
+    this.createPurchase({
+      email: "john.doe@example.com",
+      transactionRef: "txn_1234567890",
+      amount: "29.99",
+      bookId: 1
+    });
+
+    this.createPurchase({
+      email: "jane.smith@example.com", 
+      transactionRef: "txn_0987654321",
+      amount: "39.99",
+      bookId: 2
     });
   }
 
@@ -133,7 +155,14 @@ export class MemStorage implements IStorage {
 
   async createBook(insertBook: InsertBook): Promise<Book> {
     const id = this.currentBookId++;
-    const book: Book = { ...insertBook, id, createdAt: new Date() };
+    const book: Book = { 
+      ...insertBook, 
+      id, 
+      createdAt: new Date(),
+      coverImage: insertBook.coverImage || null,
+      pdfFile: insertBook.pdfFile || null,
+      featured: insertBook.featured || false
+    };
     this.books.set(id, book);
     return book;
   }
@@ -161,7 +190,14 @@ export class MemStorage implements IStorage {
 
   async createVideo(insertVideo: InsertVideo): Promise<Video> {
     const id = this.currentVideoId++;
-    const video: Video = { ...insertVideo, id, createdAt: new Date() };
+    const video: Video = { 
+      ...insertVideo, 
+      id, 
+      createdAt: new Date(),
+      thumbnail: insertVideo.thumbnail || null,
+      duration: insertVideo.duration || null,
+      featured: insertVideo.featured || false
+    };
     this.videos.set(id, video);
     return video;
   }
@@ -181,9 +217,18 @@ export class MemStorage implements IStorage {
 
   async createPurchase(insertPurchase: InsertPurchase): Promise<Purchase> {
     const id = this.currentPurchaseId++;
-    const purchase: Purchase = { ...insertPurchase, id, createdAt: new Date() };
+    const purchase: Purchase = { 
+      ...insertPurchase, 
+      id, 
+      createdAt: new Date(),
+      bookId: insertPurchase.bookId || null
+    };
     this.purchases.set(id, purchase);
     return purchase;
+  }
+
+  async getAllPurchases(): Promise<Purchase[]> {
+    return Array.from(this.purchases.values());
   }
 
   async getPurchasesByEmail(email: string): Promise<Purchase[]> {

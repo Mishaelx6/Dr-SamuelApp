@@ -4,12 +4,15 @@ import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import type { Book, Video } from "@shared/schema";
+import type { Book, Video, Purchase } from "@shared/schema";
 
 export default function AdminDashboard() {
   const [, setLocation] = useLocation();
@@ -26,6 +29,21 @@ export default function AdminDashboard() {
   const { data: videos = [] } = useQuery<Video[]>({
     queryKey: ["/api/videos"],
     enabled: isAuthenticated
+  });
+
+  const { data: purchases = [] } = useQuery<Purchase[]>({
+    queryKey: ["/api/purchases"],
+    enabled: isAuthenticated,
+    queryFn: async () => {
+      const token = localStorage.getItem('adminToken');
+      const response = await fetch('/api/purchases', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (!response.ok) throw new Error('Failed to fetch purchases');
+      return response.json();
+    }
   });
 
   const loginMutation = useMutation({
@@ -206,6 +224,7 @@ export default function AdminDashboard() {
           <TabsList>
             <TabsTrigger value="books">Books</TabsTrigger>
             <TabsTrigger value="videos">Videos</TabsTrigger>
+            <TabsTrigger value="transactions">Transactions</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
           </TabsList>
 
@@ -231,6 +250,10 @@ export default function AdminDashboard() {
                       <Input name="coverImage" type="file" accept="image/*" />
                     </div>
                     <Input name="pdfFile" type="file" accept=".pdf" />
+                    <div className="flex items-center space-x-2">
+                      <Checkbox id="featured" name="featured" />
+                      <Label htmlFor="featured">Featured Book</Label>
+                    </div>
                     <div className="flex justify-end space-x-2">
                       <Button type="button" variant="outline" onClick={() => setShowAddBook(false)}>
                         Cancel
@@ -251,7 +274,14 @@ export default function AdminDashboard() {
                         <img src={book.coverImage} alt={book.title} className="w-16 h-20 object-cover rounded" />
                       )}
                       <div>
-                        <h3 className="font-semibold">{book.title}</h3>
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-semibold">{book.title}</h3>
+                          {book.featured && (
+                            <Badge variant="secondary" className="bg-primary/10 text-primary text-xs">
+                              Featured
+                            </Badge>
+                          )}
+                        </div>
                         <p className="text-gray-600">{book.author}</p>
                         <p className="text-primary font-bold">${book.price}</p>
                       </div>
@@ -295,6 +325,10 @@ export default function AdminDashboard() {
                     </div>
                     <Input name="videoUrl" placeholder="Video URL" required />
                     <Input name="thumbnail" type="file" accept="image/*" />
+                    <div className="flex items-center space-x-2">
+                      <Checkbox id="videoFeatured" name="featured" />
+                      <Label htmlFor="videoFeatured">Featured Video</Label>
+                    </div>
                     <div className="flex justify-end space-x-2">
                       <Button type="button" variant="outline" onClick={() => setShowAddVideo(false)}>
                         Cancel
@@ -315,7 +349,14 @@ export default function AdminDashboard() {
                         <img src={video.thumbnail} alt={video.title} className="w-24 h-16 object-cover rounded" />
                       )}
                       <div>
-                        <h3 className="font-semibold">{video.title}</h3>
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-semibold">{video.title}</h3>
+                          {video.featured && (
+                            <Badge variant="secondary" className="bg-primary/10 text-primary text-xs">
+                              Featured
+                            </Badge>
+                          )}
+                        </div>
                         <p className="text-gray-600">{video.platform}</p>
                         <p className="text-sm text-gray-500">{video.duration}</p>
                       </div>
@@ -339,6 +380,53 @@ export default function AdminDashboard() {
             </div>
           </TabsContent>
 
+          <TabsContent value="transactions" className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-xl font-semibold">Transaction Records</h2>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Recent Purchases</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {purchases.length === 0 ? (
+                  <p className="text-gray-500 text-center py-8">No transactions yet</p>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse">
+                      <thead>
+                        <tr className="border-b">
+                          <th className="text-left p-2">Date</th>
+                          <th className="text-left p-2">Customer Email</th>
+                          <th className="text-left p-2">Book</th>
+                          <th className="text-left p-2">Amount</th>
+                          <th className="text-left p-2">Transaction Ref</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {purchases.map((purchase) => {
+                          const book = books.find(b => b.id === purchase.bookId);
+                          return (
+                            <tr key={purchase.id} className="border-b hover:bg-gray-50">
+                              <td className="p-2">
+                                {purchase.createdAt ? new Date(purchase.createdAt).toLocaleDateString() : 'N/A'}
+                              </td>
+                              <td className="p-2">{purchase.email}</td>
+                              <td className="p-2">{book ? book.title : 'Unknown Book'}</td>
+                              <td className="p-2 font-semibold">${purchase.amount}</td>
+                              <td className="p-2 text-xs text-gray-600">{purchase.transactionRef}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           <TabsContent value="analytics">
             <Card>
               <CardHeader>
@@ -355,7 +443,7 @@ export default function AdminDashboard() {
                     <div className="text-gray-600">Total Videos</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-warning">0</div>
+                    <div className="text-3xl font-bold text-warning">{purchases.length}</div>
                     <div className="text-gray-600">Total Sales</div>
                   </div>
                 </div>

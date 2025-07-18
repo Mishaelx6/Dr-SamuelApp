@@ -17,6 +17,7 @@ export const books = pgTable("books", {
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
   coverImage: text("cover_image"),
   pdfFile: text("pdf_file"),
+  featured: boolean("featured").default(false),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -28,6 +29,7 @@ export const videos = pgTable("videos", {
   platform: text("platform").notNull(),
   videoUrl: text("video_url").notNull(),
   duration: text("duration"),
+  featured: boolean("featured").default(false),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

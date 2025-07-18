@@ -230,6 +230,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get all purchases (admin only)
+  app.get("/api/purchases", authenticateToken, async (req, res) => {
+    try {
+      const purchases = await storage.getAllPurchases();
+      res.json(purchases);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch purchases" });
+    }
+  });
+
   app.get("/api/purchases/:email", async (req, res) => {
     try {
       const email = req.params.email;
