@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { DialogTitle } from "@/components/ui/dialog";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { CreditCard, Lock } from "lucide-react";
 import { getCartItems, clearCart } from "@/lib/cart";
@@ -75,6 +76,7 @@ export default function PaymentModal({ isOpen, onClose }: PaymentModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-md w-full">
+        <DialogTitle>Confirm Purchase</DialogTitle>
         <div className="p-6">
           <div className="text-center mb-6">
             <CreditCard className="text-primary text-4xl mb-4 mx-auto" />

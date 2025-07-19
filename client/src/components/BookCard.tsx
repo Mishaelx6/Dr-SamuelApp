@@ -34,7 +34,7 @@ export default function BookCard({ book, onPreview, onPayment }: BookCardProps) 
         <p className="text-gray-600 mb-2">by {book.author}</p>
         <p className="text-gray-700 mb-4 line-clamp-3">{book.description}</p>
         <div className="flex items-center justify-between">
-          <span className="text-2xl font-bold text-primary">${book.price}</span>
+          <span className="text-2xl font-bold text-primary">N{book.price}</span>
           <div className="flex space-x-2">
             <Button 
               variant="outline"

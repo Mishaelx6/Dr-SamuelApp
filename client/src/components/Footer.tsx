@@ -20,7 +20,8 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-2xl font-bold mb-4">Digital Library</h3>
+             <img src="/logo.png" alt="Site Logo" className="h-12 md:h-16  w-auto" />
+
             <p className="text-gray-300 mb-4">
               Empowering learners with premium digital content and educational resources.
             </p>

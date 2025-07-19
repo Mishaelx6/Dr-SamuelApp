@@ -30,7 +30,7 @@ export async function initiatePaystackPayment(options: PaystackPaymentOptions): 
     key: publicKey,
     email: options.email,
     amount: options.amount,
-    currency: 'USD',
+    currency: 'NGN',
     ref: generateTransactionRef(),
     metadata: {
       custom_fields: [

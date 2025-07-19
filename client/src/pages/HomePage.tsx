@@ -47,7 +47,7 @@ export default function HomePage() {
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Featured Books</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Discover our handpicked selection of premium digital books. Preview the first 3 pages for free, then purchase for full access.
+              Every page is packed with practical wisdom, real-life stories, and powerful strategies you can apply today.
             </p>
           </div>
           
@@ -85,7 +85,7 @@ export default function HomePage() {
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Featured Videos</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Watch our curated selection of educational videos and tutorials. All videos open in external platforms for the best viewing experience.
+              Learn directly from a globally recognized author and speaker with years of experience in leadership, purpose, and personal growth.
             </p>
           </div>
           

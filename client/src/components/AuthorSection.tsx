@@ -24,22 +24,34 @@ export default function AuthorSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <img 
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=700" 
+              src="./pick2.jpg" 
               alt="Professional author portrait" 
               className="rounded-2xl shadow-xl w-full h-auto" 
             />
           </div>
           <div>
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">About the Author</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Dr. Samuel Olusegun Owokoniran
+</h2>
             <div className="prose prose-lg text-gray-700 mb-8">
               <p className="mb-4">
-                Dr. Alexandra Bennett is a renowned digital strategist and educator with over 15 years of experience in technology and business development. She has helped thousands of professionals advance their careers through practical, actionable learning content.
+                Dr. Samuel Olusegun Owokoniran is a highly accomplished Strategic and Financial Consultant
+with over 25 years of progressive experience in business strategy, financial modelling, public
+sector advisory, and organizational transformation. He brings deep expertise in consulting for
+legislative bodies, government institutions, and corporate organizations, with a proven record of
+delivering impactful solutions aligned with global best practices
               </p>
               <p className="mb-4">
-                Alexandra holds a PhD in Computer Science from MIT and has worked with Fortune 500 companies including Google, Microsoft, and Amazon. Her expertise spans digital marketing, software development, and user experience design.
+                Dr. Owokoniran began his career in the Nigerian banking sector, where he played key roles in
+client relationship management, revenue generation, and strategic operations. His deep
+understanding of financial products and modelling platforms has enabled him to design and
+implement innovative, data-driven strategies that consistently meet and exceed institutional goals.
               </p>
               <p>
-                Through her books and video courses, she makes complex topics accessible to learners at all levels, combining academic rigor with real-world application.
+                In addition to his corporate engagements, he is an Associate Professor of Leadership and
+Entrepreneurship at the London School of Entrepreneur and African Studies, UK, where he
+integrates academic excellence with real-world business insight. His areas of specialization include
+Finance, international relations, business process automation, strategy execution, and leadership
+development.
               </p>
             </div>
             
