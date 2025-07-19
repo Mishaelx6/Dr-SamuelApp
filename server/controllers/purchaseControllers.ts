@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { db } from "../db.js";
-import { purchases } from "@shared/schema"; // Adjust path if needed
+import { purchases } from "@shared/schema.js"; // Adjust path if needed
 import { z } from "zod";
 
 const purchaseSchema = z.object({

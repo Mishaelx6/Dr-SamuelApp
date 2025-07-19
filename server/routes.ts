@@ -5,7 +5,7 @@ import {
   insertBookSchema,
   insertVideoSchema,
   insertPurchaseSchema
-} from "@shared/schema";
+} from "@shared/schema.js";
 import multer from "multer";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
