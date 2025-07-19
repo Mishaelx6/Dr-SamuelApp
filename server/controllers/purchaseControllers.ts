@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { db } from "../db";
+import { db } from "../db.js";
 import { purchases } from "@shared/schema"; // Adjust path if needed
 import { z } from "zod";
 
