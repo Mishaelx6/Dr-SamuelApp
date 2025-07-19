@@ -566,7 +566,7 @@ async function setupVite(app2, server) {
   });
 }
 function serveStatic(app2) {
-  const distPath = path.resolve(__dirname, "..", "dist", "public");
+  const distPath = path.resolve(__dirname, "..", "dist", "client");
   if (!fs.existsSync(distPath)) {
     throw new Error(
       `\u274C Build directory not found at ${distPath}. Did you forget to run "vite build"?`
