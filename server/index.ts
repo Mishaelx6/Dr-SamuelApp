@@ -1,6 +1,6 @@
 import express, { type Request, type Response, type NextFunction } from "express";
-import { registerRoutes } from "./routes";
-import { setupVite, serveStatic, log } from "./vite";
+import { registerRoutes } from "./routes.js";
+import { setupVite, serveStatic, log } from "./vite.js";
 import dotenv from "dotenv";
 import { createServer, type Server } from "http";
 

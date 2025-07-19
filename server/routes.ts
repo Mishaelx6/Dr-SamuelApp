@@ -9,7 +9,7 @@ import {
 import multer from "multer";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { createPurchase } from "./controllers/purchaseControllers";
+import { createPurchase } from "./controllers/purchaseControllers.js";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
