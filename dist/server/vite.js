@@ -51,7 +51,7 @@ export async function setupVite(app, server) {
 }
 export function serveStatic(app) {
     // ✅ FIXED: Serve the production build from client/dist
-    const distPath = path.resolve(import.meta.dirname, "..", "client", "dist");
+    const distPath = path.resolve(import.meta.dirname, "..", "dist", "client");
     if (!fs.existsSync(distPath)) {
         throw new Error(`Could not find the build directory: ${distPath}. Make sure to run "vite build" first.`);
     }
