@@ -13,7 +13,7 @@ export default function Hero() {
       <div className="absolute inset-0 bg-black bg-opacity-20"></div>
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-5xl md:text-6xl font-bold mb-6">Success Driven Live</h2>
+          <h2 className="text-5xl md:text-6xl font-bold mb-6">Success Driven Life</h2>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
            Unlock your full potential and turn ambition into achievement—where passion meets purpose every day.
           </p>
